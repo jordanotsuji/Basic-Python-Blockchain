@@ -9,4 +9,4 @@ Objectives:
   - Methods & Libraries 
   - APIs
 - Learn about blockchain on a more technical level
-
+- Build basic web apps that interact with the blockchain
