@@ -9,17 +9,24 @@ from time import time
 #   Trasactions with RSA encryption
 
 class Blockchain:
+    """
+    Blocks of transactional and/or other information that each depend on the last block's
+    hash, making the entire history of the chain of blocks (blockchain) immutable.
+
+    Tracks transactions, but can easily store other data if modified.
+    """
 
     def __init__(self):
-        self.chain = []
-        self.transactions = []
+        self.chain = [] # Chain of previous blocks of data
+        self.transactions = [] # Transactions of the current block being created
         # Create genesis block
         self.new_block(previous_hash = 1, proof = 100)
 
     def new_block(self, proof, previous_hash=None):
-        # Creates a new block and ads it to the chain
         """
-        :param proof: <int> The proof given by POW algorithm 
+        Creates a new block and adds it to the chain
+
+        :param proof: <int> The proof given by POW algorithm
         :param previous_hash: (Optional) <str> Hash of previous block
         :return: <dict> new Block
         """
@@ -31,13 +38,17 @@ class Blockchain:
                 'proof':proof,
                 'previous_hash':previous_hash or self.hash(self.chain[-1]),
                 }
+
         # Clear list of current transactions and append new block to chain
         self.transactions = []
         self.chain.append(block)
         return block
 
     def new_transaction(self, sender, recipient, amount):
-        # Adds new transaction to the list of transactions 
+        """
+        Adds new transaction to the list of transactions 
+        """
+
         self.transactions.append({
             'sender':sender,
             'recipient':recipient,
@@ -47,13 +58,16 @@ class Blockchain:
 
     @staticmethod
     def hash(block):
-        # Creates a SHA-265 hash of a block
-
+        """
+        Returns the SHA-256 hash of a block
+        """
         # Sort the keys of the block so jsons are consistant, and convert to json
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
     @property
     def last_block(self):
-        # Returns the last block in the chain
+        """
+        Returns the last block of the chain
+        """
         return self.chain[-1]
