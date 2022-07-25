@@ -13,6 +13,7 @@ class Blockchain:
     def __init__(self):
         self.chain = []
         self.transactions = []
+        # Create genesis block
         self.new_block(previous_hash = 1, proof = 100)
 
     def new_block(self, proof, previous_hash=None):
@@ -46,8 +47,11 @@ class Blockchain:
 
     @staticmethod
     def hash(block):
-        #Hashes a block
-        pass
+        # Creates a SHA-265 hash of a block
+
+        # Sort the keys of the block so jsons are consistant, and convert to json
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
 
     @property
     def last_block(self):
