@@ -36,7 +36,7 @@ class Blockchain:
                 'timestamp':time(),
                 'transactions':self.transactions,
                 'proof':proof,
-                'previous_hash':previous_hash or self.hash(self.chain[-1]),
+                'previous_hash':previous_hash or self.hash(self.chain[-1])
                 }
 
         # Clear list of current transactions and append new block to chain
@@ -71,3 +71,24 @@ class Blockchain:
         Returns the last block of the chain
         """
         return self.chain[-1]
+
+    def proof_of_work(self, last_proof):
+        """
+        Simple proof of work algorithm
+        - Find a number x such that hash("x(previous block's hash)") has 4 leading zeroes (0000)
+        """
+
+        proof = 0
+        while self.valid_proof(proof, last_proof) is False:
+            proof += 1
+
+        return proof
+
+    def valid_proof(self, guess, last_proof):
+        """
+        Returns true if hash(guess, last_proof) has 4 leading zeroes 
+        """
+
+        guessString = f'{last_proof}{guess}'.encode()
+        guessHash = hashlib.sha256(guessString).hexdigest()
+        return guessHash[:4] == "0000"
