@@ -3,7 +3,8 @@ import json
 from time import time
 from uuid import uuid4
 from textwrap import dedent
-from flask import Flask, jsonify
+
+from flask import Flask, jsonify, request
 
 # Blockchain.py
 # Features:
@@ -108,12 +109,29 @@ node_identifier = str(uuid4()).replace('-', '')
 # Instantiate the blockchain
 blockchain = Blockchain()
 
+# API definition
 @app.route('/mine', methods=['GET'])
 def mine():
     return "Mining a new block"
 
+# Example Transaction:
+# {
+#  "sender": "my address",
+#  "recipient": "someone else's address",
+#  "amount": 5
+# }
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
+    """
+    Handles POST requests with new transactions for the blockchain
+    """  
+    
+    values = request.json()
+
+    required = ['sender', 'recipient', 'amount']
+    if not all(k in values for k in required):
+        return 'Missing Required Field(s)', 400
+
     return "Adding new transaction"
 
 @app.route('/chain', methods=['GET'])
@@ -124,5 +142,6 @@ def full_chain():
             }
     return jsonify(response), 200 
 
+# Start server on port 5000
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
