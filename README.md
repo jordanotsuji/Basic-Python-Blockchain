@@ -14,4 +14,8 @@ Following Adil Moujahid's guide: A Practical Introduction to Blockchain with Pyt
 - Build basic web apps that interact with the blockchain
 
 ## Notes:
--  
+- Constructing Dictionaries
+- String Slicing
+- f strings
+- Flask REST APIs
+- __name__ = '__main__' 
