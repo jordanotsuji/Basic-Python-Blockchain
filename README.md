@@ -18,4 +18,4 @@ Following Adil Moujahid's guide: A Practical Introduction to Blockchain with Pyt
 - String Slicing
 - f strings
 - Flask REST APIs
-- \_\_name__ = '__main__' 
+- \_\_name__ = '\_\_main__' 
