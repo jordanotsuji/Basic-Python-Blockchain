@@ -265,6 +265,23 @@ def register_nodes():
             }
     return jsonify(response), 201
 
+@app.route('/nodes/resolve', methods=['GET'])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+                'message':'This Node\'s chain was replaced',
+                'chain':blockchain.chain
+                }
+    else:
+        response = {
+                'message':'This Node\'s chain is accurate',
+                'chain':blockchain.chain
+                }
+
+    return jsonify(response), 200
+
 # Start server on port 5000
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
