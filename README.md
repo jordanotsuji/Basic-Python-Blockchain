@@ -19,3 +19,4 @@ Following Adil Moujahid's guide: A Practical Introduction to Blockchain with Pyt
 - f strings
 - Flask REST APIs
 - \_\_name__ = '\_\_main__' 
+- all()
