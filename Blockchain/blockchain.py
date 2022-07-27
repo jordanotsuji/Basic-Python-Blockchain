@@ -92,12 +92,13 @@ class Blockchain:
 
         return proof
 
-    def valid_proof(self, guess, last_proof):
+    def valid_proof(self, proof, last_proof):
         """
         Returns true if hash(guess, last_proof) has 4 leading zeroes 
         """
 
-        guessString = f'{last_proof}{guess}'.encode()
+        guessString = f'{last_proof}{proof}'.encode()
+        # TODO: Possibly change this to hash()
         guessHash = hashlib.sha256(guessString).hexdigest()
         return guessHash[:4] == "0000"
 
@@ -118,6 +119,28 @@ class Blockchain:
         :param chain: <list> A blockchain
         :return: <bool> True if valid, False otherwise
         """
+
+        last_block = chain[0]
+        current_index = 1
+        # Loop from first node in chain the last validating proofs for each pair of neighbors 
+        while current_index < len(chain):
+            block = chain[current_index]
+            print(f'{last_block}') 
+            print(f'{block}')
+            print("\n----------------\n")
+            # Make sure that this block's last_proof = last block's proof
+            # & Make sure that this block's proof and last_proof are valid together
+            if block['previous_hash'] != self.hash(last_block):
+                return False
+
+            if not self.valid_proof(block['proof'], last_block['proof']):
+                return False
+
+            last_block = block
+            current_index += 1
+        
+        # Return true if loop finds everything valid
+        return True 
 
     def resolve_conflicts(self):
         """
@@ -147,7 +170,6 @@ class Blockchain:
         # Return false if chain wasn't replaced 
         return False
          
-
 
 # Blockchain class definition end
 
