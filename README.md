@@ -1,8 +1,7 @@
 # Basic Python Blockchain
 
-Following Adil Moujahid's guide: A Practical Introduction to Blockchain with Python which is based on Daniel van Flymen's guide
+Following Daniel van Flymen's guide
 
-- http://adilmoujahid.com/posts/2018/03/intro-blockchain-bitcoin-python/
 - https://medium.com/@vanflymen/learn-blockchains-by-building-one-117428612f46
     
 ## Objectives:
@@ -20,3 +19,8 @@ Following Adil Moujahid's guide: A Practical Introduction to Blockchain with Pyt
 - Flask REST APIs
 - \_\_name__ = '\_\_main__' 
 - all()
+- requests
+
+Later:
+
+Modify/recreate based on more advanced guide: http://adilmoujahid.com/posts/2018/03/intro-blockchain-bitcoin-python/
