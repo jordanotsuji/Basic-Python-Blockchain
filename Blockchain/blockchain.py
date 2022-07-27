@@ -1,9 +1,10 @@
 import hashlib
 import json
+import requests
 from time import time
 from uuid import uuid4
 from textwrap import dedent
-
+from urllib.parse import urlparse
 from flask import Flask, jsonify, request
 
 # Blockchain.py
@@ -22,10 +23,12 @@ class Blockchain:
     """
 
     def __init__(self):
-        self.chain = [] # Chain of previous blocks of data
-        self.transactions = [] # Transactions of the current block being created
+        self.chain = []         # Chain of previous blocks of data
+        self.transactions = []  # Transactions of the current block being created
         # Create genesis block
         self.new_block(previous_hash = 1, proof = 100)
+        self.nodes = set()      # Set containing neighboring nodes for validation  
+
 
     def new_block(self, proof, previous_hash=None):
         """
@@ -97,6 +100,54 @@ class Blockchain:
         guessString = f'{last_proof}{guess}'.encode()
         guessHash = hashlib.sha256(guessString).hexdigest()
         return guessHash[:4] == "0000"
+
+    def register_node(self, address):
+        """
+        Accepts a new node as a URL and registers it into the blockchain
+        Eg. 'http://192.168.0.5:5000'
+        """
+
+        parsed_url = urlparse(address)
+        # "netloc" = netlocation, and returns the domain, port, and optional username/password
+        self.nodes.add(parsed_url.netloc)        
+
+    def valid_chain(self, chain):
+        """
+        Determines if a given blockchain is valid
+
+        :param chain: <list> A blockchain
+        :return: <bool> True if valid, False otherwise
+        """
+
+    def resolve_conflicts(self):
+        """
+        Use Consensus Algorithm to resolve conflicts on the blockchain
+        For this blockchain, the longest valid chain is the authority
+
+        :return: <bool> True if this blockchain's chain was replaced, False if otherwise
+        """
+         
+        neighbors = self.nodes
+        new_chain = None
+        max_length = len(self.chain)
+
+        for node in neighbors:
+            response = requests.get(f'http://{node}/chain')
+
+            if response.status_code == 200:
+                tempNodeLength = response.json()['length']
+                tempChain = response.json()['chain']
+                if tempNodeLength > max_length and self.valid_chain(tempChain):
+                    new_chain = tempChain
+                    max_length = tempNodeLength
+        # If there was a longer chain, replace the current chain and return True        
+        if new_chain:
+            self.chain = new_chain
+            return True
+        # Return false if chain wasn't replaced 
+        return False
+         
+
 
 # Blockchain class definition end
 
