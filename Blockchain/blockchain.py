@@ -190,6 +190,9 @@ blockchain = Blockchain()
 #   - Forge new block by adding to the chain
 @app.route('/mine', methods=['GET'])
 def mine():
+    """
+    Run POW algorithm and reward miner with 1 coin
+    """
     # Run POW algorithm to get the next proof
     last_block = blockchain.last_block
     last_proof = last_block['proof']
@@ -237,6 +240,9 @@ def new_transaction():
 
 @app.route('/chain', methods=['GET'])
 def full_chain():
+    """
+    Returns the full blockchain of this Node
+    """
     response = {
             'chain':blockchain.chain,
             'length':len(blockchain.chain)
@@ -267,6 +273,9 @@ def register_nodes():
 
 @app.route('/nodes/resolve', methods=['GET'])
 def consensus():
+    """
+    Resolves any conflicts and makes sure this Node's chain is accurate
+    """
     replaced = blockchain.resolve_conflicts()
 
     if replaced:
