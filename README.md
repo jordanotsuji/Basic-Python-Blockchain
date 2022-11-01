@@ -1,6 +1,6 @@
 # Basic Python Blockchain
 
-Written using prior knowledge of blockchain technology & supplemented by Daniel van Flymen's guide  
+Written using prior knowledge of blockchain technology & Daniel van Flymen's guide  
 https://medium.com/@vanflymen/learn-blockchains-by-building-one-117428612f46
 
 ### API Query Options:
