@@ -6,12 +6,12 @@ Loosely Following Daniel van Flymen's guide
 API Query Options:
 
 GET: /chain
-- Returns the full blockchain of current node
+- Returns the full blockchain of current node  
 GET: /nodes/resolve
-- Resolves any conflicts and makes sure current node's chain is accurate
+- Resolves any conflicts and makes sure current node's chain is accurate  
 GET: /mine
-- Run Proof of Work algorithm and reward miner with 1 coin
+- Run Proof of Work algorithm and reward miner with 1 coin  
 POST: /transactions/new
-- Adds a new transaction to the blockchain
+- Adds a new transaction to the blockchain  
 POST: /nodes/register
-- Accepts a list of nodes and adds them to the blockchain
+- Accepts a list of nodes and adds them to the blockchain  
