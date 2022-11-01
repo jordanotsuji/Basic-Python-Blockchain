@@ -13,7 +13,9 @@ GET: /nodes/resolve
 
 GET: /mine  
 - Run Proof of Work algorithm and reward miner with 1 coin  
+
 POST: /transactions/new  
 - Adds a new transaction to the blockchain  
+
 POST: /nodes/register  
 - Accepts a list of nodes and adds them to the blockchain  
