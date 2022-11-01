@@ -1,8 +1,5 @@
 # Basic Python Blockchain
 
-Loosely Following Daniel van Flymen's guide 
-- https://medium.com/@vanflymen/learn-blockchains-by-building-one-117428612f46
-
 ### API Query Options:
 
 GET: /chain  
